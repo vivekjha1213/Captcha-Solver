@@ -1,6 +1,7 @@
 const puppeteer = require('puppeteer');
 const request = require('request-promise-native');
 
+
 const solveCaptcha = async(imageUrl) => {
     // Start headless Chrome browser
     const browser = await puppeteer.launch();
@@ -39,7 +40,10 @@ const solveCaptcha = async(imageUrl) => {
     return result.solution.text;
 };
 
-// Usage example
-// solveCaptcha('https://www.apowersoft.com/free-screen-capture.png')
-//     .then(result => console.log(result))
-//     .catch(error => console.error(error));
+
+solveCaptcha('https://i.ibb.co/jTKYQqP/Captcha-United.png')
+    .then(result => console.log(result))
+    .catch(error => console.error(error));
+
+
+module.exports = solveCaptcha;
