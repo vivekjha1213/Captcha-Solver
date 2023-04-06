@@ -1,14 +1,20 @@
 const puppeteer = require('puppeteer');
 const request = require('request-promise-native');
-
-
 const solveCaptcha = async(imageUrl) => {
     // Start headless Chrome browser
     const browser = await puppeteer.launch();
     const page = await browser.newPage();
 
     // Load the captcha image URL
-    await page.goto(imageUrl);
+    try {
+        const response = await page.goto(imageUrl);
+        if (!response.ok()) {
+            throw new Error(`Failed to load image at ${imageUrl}. Status code: ${response.status()}`);
+        }
+    } catch (error) {
+        console.error(`Failed to load image at ${imageUrl}: ${error.message}`);
+        throw error;
+    }
 
     // Get the image dimensions
     const dimensions = await page.evaluate(() => {
@@ -38,12 +44,7 @@ const solveCaptcha = async(imageUrl) => {
 
 
     return result.solution.text;
+
 };
-
-
-solveCaptcha('https://i.ibb.co/jTKYQqP/Captcha-United.png')
-    .then(result => console.log(result))
-    .catch(error => console.error(error));
-
 
 module.exports = solveCaptcha;
