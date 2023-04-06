@@ -1,7 +1,7 @@
 const puppeteer = require('puppeteer');
 const request = require('request-promise-native');
 const solveCaptcha = async(imageUrl) => {
-    // Start headless Chrome browser
+
     const browser = await puppeteer.launch();
     const page = await browser.newPage();
 
