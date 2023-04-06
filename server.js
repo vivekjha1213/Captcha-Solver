@@ -2,12 +2,13 @@ const express = require('express');
 const request = require('request-promise-native');
 const sharp = require('sharp');
 const solveCaptcha = require('./solveCaptcha');
+const puppeteer = require('puppeteer');
 
 const app = express();
 
 app.use(express.json());
 
-app.post('/solve-captcha', async(req, res) => {
+app.post('/solvecaptcha', async(req, res) => {
 
     const captchaUrl = req.body.url;
 
